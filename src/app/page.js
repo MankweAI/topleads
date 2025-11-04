@@ -5,89 +5,33 @@ import {
   FireIcon,
   HomeModernIcon,
   BoltIcon,
-  MagnifyingGlassIcon,
-  CalculatorIcon,
-  DocumentTextIcon,
+  MapPinIcon,
+  StarIcon,
+  ChatBubbleBottomCenterTextIcon,
   CheckBadgeIcon,
-} from "@heroicons/react/24/outline";
-import Header from "@/components/Header";
-
-// Topleads Color & Theme Reference (from tailwind.config.js):
-// brand-navy:       #0A2540
-// brand-navy-dark:  #061A2E
-// brand-light-gray: #F6F9FC
-// brand-off-white:  #FFFFFF
-// brand-action-green: #19D479
-// brand-warning:    #F59E0B
-// brand-info:       #3B82F6
-// brand-steel-dark: #4A5568
-// accent:           #E67E22
-const hubs = [
-  {
-    name: "For Plumbers",
-    description: "Find leaks in your call handling, map ranking, and reviews.",
-    href: "/spokes/plumbers",
-    icon: WrenchScrewdriverIcon,
-    iconBg: "linear-gradient(135deg, #d1ff3b 0%, #3B82F6 94%)", // vibrant yellow-green + blue
-  },
-  {
-    name: "For HVAC Specialists",
-    description:
-      "See how many enquiries and high-value install jobs you're missing.",
-    href: "/spokes/hvac",
-    icon: FireIcon,
-    iconBg: "linear-gradient(135deg, #ffecd1 0%, #F59E0B 94%)", // vivid cream + orange
-  },
-  {
-    name: "For Roofers",
-    description: "Analyze your trust signals and local search visibility.",
-    href: "/spokes/roofers",
-    icon: HomeModernIcon,
-    iconBg: "linear-gradient(135deg, #baffd1 0%, #19D479 94%)", // mint green + action green
-  },
-  {
-    name: "For Electricians",
-    description: "Pinpoint where competitors are capturing your leads.",
-    href: "/spokes/electricians",
-    icon: BoltIcon,
-    iconBg: "linear-gradient(135deg, #ffd1fa 0%, #6B7C93 94%)", // pink-violet + steel
-  },
-];
-
-
-const promises = [
-  {
-    icon: CheckBadgeIcon,
-    title: "No Fluff, Just Data",
-    description:
-      "Our reports show you actionable numbers, not vague marketing jargon.",
-  },
-  {
-    icon: CheckBadgeIcon,
-    title: "No 1-Hour Sales Calls",
-    description:
-      "Our diagnostic is instant. Our strategy call is 15 minutes, tops.",
-  },
-  {
-    icon: CheckBadgeIcon,
-    title: "No Hard Sell",
-    description:
-      "We show you the leaks. You decide if you want our help to fix them.",
-  },
-];
+} from "@heroicons/react/24/solid"; // Using solid icons for more punch
 
 export default function Home() {
-  const scrollToHubs = () =>
-    document.getElementById("hubs")?.scrollIntoView({ behavior: "smooth" });
+  // Helper function to scroll to the top hero section
+  const scrollToHero = () => {
+    document
+      .getElementById("hero-funnel")
+      ?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <div className="min-h-screen bg-brand-off-white font-sans">
-      {/* --- HERO Section: Video with Overlay & Header --- */}
-      <section className="relative w-full h-screen min-h-[600px] bg-transparent flex items-center justify-center text-center p-0 overflow-hidden">
+    // Base colors: light gray background, dark text
+    <div className="min-h-screen bg-[#f1f5f9] font-sans text-[#0f172a]">
+      {/* --- SECTION 1: The "Hero-Funnel" --- */}
+      <section
+        id="hero-funnel"
+        // Dark slate background for the hero
+        className="relative w-full h-screen min-h-[700px] bg-[#0f172a] flex items-center justify-center text-center p-6 overflow-hidden"
+      >
         {/* Video BG */}
-        <div className="absolute inset-0 z-[-1] overflow-hidden">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <video
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-30" // Reduced opacity
             src="/video/tradesmen.mp4"
             autoPlay
             loop
@@ -95,167 +39,247 @@ export default function Home() {
             playsInline
             poster="/image/daf_unit.png"
           />
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-[#0f172a]/70 z-10"></div>
         </div>
-        {/* Header inside video */}
-        <div className="absolute top-0 left-0 w-full z-10">
-          <div className="bg-transparent backdrop-blur-md">
-            <Header />
-          </div>
+
+        {/* Header inside video - Simple Logo (White) */}
+        <div className="absolute top-0 left-0 w-full z-20 p-6">
+          <a
+            href="#"
+            className="text-2xl font-extrabold text-[#ffffff] tracking-wider"
+          >
+            TOPLEADS
+          </a>
         </div>
-        <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center justify-center h-full pt-32 pb-8">
+
+        <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center justify-center h-full">
           <h1
             id="hero-heading"
-            className="text-5xl md:text-6xl font-extrabold text-white mb-7 leading-tight tracking-tight drop-shadow-sm"
+            className="text-5xl md:text-7xl font-extrabold text-[#ffffff] mb-6 leading-tight tracking-tight"
           >
             Stop Leaking Money.
           </h1>
-          <p className="text-xl md:text-2xl text-white mb-12 leading-relaxed">
-            We help South African trades businesses find the R15,000 - R40,000+
-            you're losing to competitors every month.
+          {/* Lighter steel text for sub-headline */}
+          <p className="text-xl md:text-2xl text-[#94a3b8] mb-12 max-w-2xl">
+            Your plumbing, HVAC, or roofing business is losing R15,000 -
+            R40,000+ a month to competitors. We'll show you exactly where.
           </p>
-          <button
-            onClick={scrollToHubs}
-            className="font-bold py-3 px-12 rounded-full shadow-md border border-brand-action-green text-brand-navy-dark bg-brand-light-gray hover:bg-brand-action-green hover:text-white transition-all duration-200"
-          >
-            Find Your Leaks
-          </button>
+
+          {/* The "Tool" CTA */}
+          <div className="w-full max-w-3xl">
+            <h2 className="text-2xl font-semibold text-[#ffffff] mb-4">
+              Start Your Free 30-Second Audit.
+              <br />
+              {/* Lighter steel text */}
+              <span className="font-normal text-[#94a3b8] text-xl">
+                What is your trade?
+              </span>
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Vibrant Indigo buttons */}
+              <Link
+                href="/spokes/plumbers"
+                className="group flex items-center justify-center gap-2 bg-[#4f46e5] hover:bg-[#6366f1] text-[#ffffff] font-bold py-4 px-5 rounded-lg text-lg transition-all transform hover:scale-105"
+              >
+                <WrenchScrewdriverIcon className="h-6 w-6" />
+                <span>Plumber</span>
+              </Link>
+              <Link
+                href="/spokes/hvac"
+                className="group flex items-center justify-center gap-2 bg-[#4f46e5] hover:bg-[#6366f1] text-[#ffffff] font-bold py-4 px-5 rounded-lg text-lg transition-all transform hover:scale-105"
+              >
+                <FireIcon className="h-6 w-6" />
+                <span>HVAC</span>
+              </Link>
+              <Link
+                href="/spokes/roofers"
+                className="group flex items-center justify-center gap-2 bg-[#4f46e5] hover:bg-[#6366f1] text-[#ffffff] font-bold py-4 px-5 rounded-lg text-lg transition-all transform hover:scale-105"
+              >
+                <HomeModernIcon className="h-6 w-6" />
+                <span>Roofer</span>
+              </Link>
+              <Link
+                href="/spokes/electricians"
+                className="group flex items-center justify-center gap-2 bg-[#4f46e5] hover:bg-[#6366f1] text-[#ffffff] font-bold py-4 px-5 rounded-lg text-lg transition-all transform hover:scale-105"
+              >
+                <BoltIcon className="h-6 w-6" />
+                <span>Electrician</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="w-full py-20 px-6 text-center bg-brand-light-gray">
-        <h2 className="text-3xl md:text-4xl font-bold text-brand-navy-dark mb-10 tracking-tight">
-          How It Works
+      {/* --- SECTION 2: "What Are These 'Money Leaks'?" --- */}
+      {/* White background for contrast */}
+      <section className="w-full py-20 px-6 text-center bg-[#ffffff]">
+        <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-4 tracking-tight">
+          We Find the 3 "Money Leaks"
+        </h2>
+        {/* Medium steel text */}
+        <p className="text-xl text-[#64748b] mb-16 max-w-3xl mx-auto">
+          Your competitors are exploiting these gaps. Our audit checks them
+          instantly.
+        </p>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Card 1: Map Leak */}
+          <div className="flex flex-col items-center text-center p-8 border border-[#f1f5f9] rounded-xl shadow-lg">
+            {/* Vibrant Orange for "Leak" icons */}
+            <MapPinIcon className="h-12 w-12 text-[#f97316] mb-4" />
+            <h3 className="font-bold text-2xl text-[#0f172a] mb-3">
+              1. The Map Leak
+            </h3>
+            <p className="text-base text-[#64748b] leading-relaxed">
+              90% of customers choose a business from the Google "3-Pack". If
+              you're not in the top 3, you're invisible. We check your rank
+              instantly.
+            </p>
+          </div>
+
+          {/* Card 2: Trust Leak */}
+          <div className="flex flex-col items-center text-center p-8 border border-[#f1f5f9] rounded-xl shadow-lg">
+            {/* Vibrant Orange for "Leak" icons */}
+            <StarIcon className="h-12 w-12 text-[#f97316] mb-4" />
+            <h3 className="font-bold text-2xl text-[#0f172a] mb-3">
+              2. The Trust Leak
+            </h3>
+            <p className="text-base text-[#64748b] leading-relaxed">
+              Customers choose competitors with higher review scores. A 4.8-star
+              business will get the call over your 3.5-star rating every single
+              time.
+            </p>
+          </div>
+
+          {/* Card 3: Enquiry Leak */}
+          <div className="flex flex-col items-center text-center p-8 border border-[#f1f5f9] rounded-xl shadow-lg">
+            {/* Vibrant Orange for "Leak" icons */}
+            <ChatBubbleBottomCenterTextIcon className="h-12 w-12 text-[#f97316] mb-4" />
+            <h3 className="font-bold text-2xl text-[#0f172a] mb-3">
+              3. The Enquiry Leak
+            </h3>
+            <p className="text-base text-[#64748b] leading-relaxed">
+              60% of customers browse after 5 PM. If your site can't capture
+              their details 24/7 with a chatbot, they leave and call someone
+              else.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* --- SECTION 3: "How Your 30-Second Audit Works" --- */}
+      {/* Light gray background */}
+      <section className="w-full py-20 px-6 text-center bg-[#f1f5f9]">
+        <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-16 tracking-tight">
+          Your 30-Second Audit
         </h2>
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-          <div className="flex flex-col items-center bg-white rounded-xl shadow-md py-8 px-4 hover:shadow-lg transition group">
-            <div
-              className="flex items-center justify-center h-16 w-16 mb-6 rounded-full shadow-inner"
-              style={{ background: "#A0AEC0", opacity: 0.13 }}
-            >
-              <MagnifyingGlassIcon
-                className="h-10 w-10"
-                style={{ color: "#1E2329" }}
-              />
+          <div className="flex flex-col items-center">
+            {/* Vibrant Lime Action Color */}
+            <div className="flex items-center justify-center h-16 w-16 mb-6 rounded-full bg-[#84cc16] text-[#0f172a] shadow-lg">
+              <span className="text-3xl font-bold">1</span>
             </div>
-            <h3 className="font-bold text-xl text-brand-navy-dark mb-2 group-hover:text-brand-info transition-colors">
-              1. Select Your Trade
+            <h3 className="font-bold text-xl text-[#0f172a] mb-2">
+              Select Your Trade
             </h3>
-            <p className="text-base text-brand-steel-dark">
-              Choose your industry for a specialized diagnostic.
+            <p className="text-base text-[#64748b]">
+              (You can do this at the top!) This customizes the audit for your
+              industry.
             </p>
           </div>
-          <div className="flex flex-col items-center bg-white rounded-xl shadow-md py-8 px-4 hover:shadow-lg transition group">
-            <div
-              className="flex items-center justify-center h-16 w-16 mb-6 rounded-full shadow-inner"
-              style={{ background: "#F6F9FC", opacity: 0.14 }}
-            >
-              <CalculatorIcon
-                className="h-10 w-10"
-                style={{ color: "#1E2329" }}
-              />
+
+          <div className="flex flex-col items-center">
+            {/* Vibrant Lime Action Color */}
+            <div className="flex items-center justify-center h-16 w-16 mb-6 rounded-full bg-[#84cc16] text-[#0f172a] shadow-lg">
+              <span className="text-3xl font-bold">2</span>
             </div>
-            <h3 className="font-bold text-xl text-brand-navy-dark mb-2 group-hover:text-brand-action-green transition-colors">
-              2. Run the "Leak" Audit
+            <h3 className="font-bold text-xl text-[#0f172a] mb-2">
+              Enter Your Details
             </h3>
-            <p className="text-base text-brand-steel-dark">
-              Enter your business info into our "No-BS" tool.
+            <p className="text-base text-[#64748b]">
+              Enter your business name, website, and main suburb. No password
+              needed.
             </p>
           </div>
-          <div className="flex flex-col items-center bg-white rounded-xl shadow-md py-8 px-4 hover:shadow-lg transition group">
-            <div
-              className="flex items-center justify-center h-16 w-16 mb-6 rounded-full shadow-inner"
-              style={{ background: "#F59E0B", opacity: 0.09 }}
-            >
-              <DocumentTextIcon
-                className="h-10 w-10"
-                style={{ color: "#1E2329" }}
-              />
+
+          <div className="flex flex-col items-center">
+            {/* Vibrant Lime Action Color */}
+            <div className="flex items-center justify-center h-16 w-16 mb-6 rounded-full bg-[#84cc16] text-[#0f172a] shadow-lg">
+              <span className="text-3xl font-bold">3</span>
             </div>
-            <h3 className="font-bold text-xl text-brand-navy-dark mb-2 group-hover:text-brand-warning transition-colors">
-              3. Get Your Report
+            <h3 className="font-bold text-xl text-[#0f172a] mb-2">
+              Get Your Instant Report
             </h3>
-            <p className="text-base text-brand-steel-dark">
-              Receive an instant, data-rich report.
+            <p className="text-base text-[#64748b]">
+              See your 'Money Leaks' immediately. No waiting for a salesperson
+              to call you.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Hubs Section */}
-      <section id="hubs" className="w-full py-16 px-6 bg-brand-light-gray">
-        <header className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-brand-navy-dark mb-2 tracking-tight">
-            Start Your Free Audit
-          </h2>
-          <p className="text-lg text-brand-steel-dark">
-            Select your trade to run a specialized diagnostic.
-          </p>
-        </header>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          {hubs.map((hub) => (
-            <Link
-              href={hub.href}
-              key={hub.name}
-              className="group block p-8 bg-white rounded-2xl shadow hover:shadow-lg border border-brand-light-gray hover:border-brand-info transition-all duration-200"
-            >
-              <div className="flex items-center gap-4">
-                <div
-                  className="flex items-center justify-center w-12 h-12 rounded-lg"
-                  style={{ background: hub.iconBg }}
-                >
-                  <hub.icon
-                    className="w-6 h-6"
-                    aria-hidden="true"
-                    style={{ color: "#fff" }}
-                  />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-brand-navy-dark mb-1 group-hover:text-brand-info transition-colors">
-                    {hub.name}
-                  </h3>
-                  <p className="text-base text-brand-steel-dark">
-                    {hub.description}
-                  </p>
-                </div>
-              </div>
-              <span className="inline-block mt-6 text-base font-semibold text-brand-info opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                Start Audit →
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Promise Section */}
-      <section className="max-w-4xl mx-auto py-16 px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-brand-navy-dark mb-10 tracking-tight">
+      {/* --- SECTION 4: "Our 'No-BS' Promise" --- */}
+      {/* White background */}
+      <section className="max-w-6xl mx-auto py-20 px-6 text-center bg-[#ffffff]">
+        <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-16 tracking-tight">
           Our "No-BS" Promise
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {promises.map((promise, i) => (
-            <div
-              key={promise.title}
-              className="flex flex-col items-center bg-brand-light-gray rounded-xl p-7 shadow-md hover:shadow-lg transition"
-            >
-              <div
-                className="flex items-center justify-center w-14 h-14 rounded-full mb-5"
-                style={{
-                  background: ["#19D479", "#3B82F6", "#F59E0B"][i % 3],
-                  opacity: 0.72,
-                }}
-              >
-                <promise.icon className="h-8 w-8" style={{ color: "#fff" }} />
-              </div>
-              <h3 className="font-bold text-lg text-brand-navy-dark mb-2">
-                {promise.title}
-              </h3>
-              <p className="text-base text-brand-steel-dark">
-                {promise.description}
-              </p>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="flex flex-col items-center bg-[#ffffff] rounded-xl p-8 shadow-md border border-[#f1f5f9]">
+            {/* Vibrant Lime Action Color */}
+            <CheckBadgeIcon className="h-12 w-12 text-[#84cc16] mb-4" />
+            <h3 className="font-bold text-xl text-[#0f172a] mb-2">
+              No Fluff, Just Data
+            </h3>
+            <p className="text-base text-[#64748b]">
+              Our reports show you actionable numbers, not vague marketing
+              jargon.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center bg-[#ffffff] rounded-xl p-8 shadow-md border border-[#f1f5f9]">
+            {/* Vibrant Lime Action Color */}
+            <CheckBadgeIcon className="h-12 w-12 text-[#84cc16] mb-4" />
+            <h3 className="font-bold text-xl text-[#0f172a] mb-2">
+              No 1-Hour Sales Calls
+            </h3>
+            <p className="text-base text-[#64748b]">
+              Our diagnostic is instant. Our strategy call is 15 minutes, tops.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center bg-[#ffffff] rounded-xl p-8 shadow-md border border-[#f1f5f9]">
+            {/* Vibrant Lime Action Color */}
+            <CheckBadgeIcon className="h-12 w-12 text-[#84cc16] mb-4" />
+            <h3 className="font-bold text-xl text-[#0f172a] mb-2">
+              No Hard Sell
+            </h3>
+            <p className="text-base text-[#64748b]">
+              We show you the leaks. You decide if you want our help to fix
+              them.
+            </p>
+          </div>
         </div>
+      </section>
+
+      {/* --- SECTION 5: Final CTA --- */}
+      {/* Dark background for final CTA */}
+      <section className="w-full py-20 px-6 text-center bg-[#0f172a]">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[#ffffff] mb-4 tracking-tight">
+          Find Your Leaks.
+        </h2>
+        {/* Light steel text */}
+        <p className="text-xl text-[#94a3b8] mb-10">
+          It's free, instant, and takes 30 seconds.
+        </p>
+        <button
+          onClick={scrollToHero}
+          // Vibrant Lime Action Button
+          className="font-bold py-4 px-12 rounded-lg shadow-lg text-[#0f172a] bg-[#84cc16] hover:bg-[#a3e635] transition-all duration-200 text-xl transform hover:scale-105"
+        >
+          Start My Free Audit →
+        </button>
       </section>
     </div>
   );

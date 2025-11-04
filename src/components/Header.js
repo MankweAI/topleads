@@ -2,83 +2,56 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import {
+  WrenchScrewdriverIcon,
+  FireIcon,
+  HomeModernIcon,
+  BoltIcon,
+} from "@heroicons/react/24/solid";
 
-// Define Topleads hubs (our industries)
+// Define Topleads hubs (for the nav)
 const hubs = [
-  { name: "Plumbers", href: "/spokes/plumbers" },
-  { name: "HVAC", href: "/spokes/hvac" },
-  { name: "Roofers", href: "/spokes/roofers" },
-  { name: "Electricians", href: "/spokes/electricians" },
+  { name: "Plumbers", href: "/spokes/plumbers", icon: WrenchScrewdriverIcon },
+  { name: "HVAC", href: "/spokes/hvac", icon: FireIcon },
+  { name: "Roofers", href: "/spokes/roofers", icon: HomeModernIcon },
+  { name: "Electricians", href: "/spokes/electricians", icon: BoltIcon },
 ];
-
-// Simple SVG Logo for "TOPLEADS"
-function TopleadsLogo() {
-  return (
-    <svg
-      width="140"
-      height="40"
-      viewBox="0 0 140 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="140" height="40" rx="8" fill="transparent" />
-      <text
-        x="70"
-        y="25"
-        fontFamily="var(--font-geist-sans)"
-        fontSize="20"
-        fill="white"
-        textAnchor="middle"
-        fontWeight="600"
-        letterSpacing="0.05em"
-      >
-        TOPLEADS
-      </text>
-    </svg>
-  );
-}
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Simple SVG Logo for "TOPLEADS" in white
+  const Logo = () => (
+    <Link href="/" className="flex items-center">
+      <span className="text-2xl font-extrabold text-tl-white tracking-wider">
+        TOPLEADS
+      </span>
+    </Link>
+  );
 
   return (
-    <header
-      className={`sticky top-0 z-50 bg-transparent transition-all duration-300 ${
-        scrolled
-          ? "bg-brand-navy-dark/90 backdrop-blur-md shadow-lg"
-          : "bg-brand-navy-dark/90 backdrop-blur-md shadow-lg"
-      }`}
-    >
+    <header className="sticky top-0 z-50 bg-tl-dark shadow-lg">
       <nav className="container mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-3">
-            <TopleadsLogo />
-          </Link>
+          <Logo />
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {hubs.map((hub) => (
               <Link
                 key={hub.name}
                 href={hub.href}
-                className="text-md text-white hover:text-brand-action-green transition-colors"
+                className="flex items-center gap-1 text-md font-medium text-tl-steel-light hover:text-tl-action transition-colors"
               >
-                {hub.name}
+                <hub.icon className="h-5 w-5" />
+                <span>{hub.name}</span>
               </Link>
             ))}
             <Link
-              href="/#cta"
-              className="bg-brand-action-green text-white font-bold py-2 px-4 rounded-lg hover:bg-brand-info hover:text-white transition-all"
+              href="/#hero-funnel" // Links to homepage hero
+              className="bg-tl-action text-tl-dark font-bold py-2 px-5 rounded-full hover:bg-tl-action-hover transition-all transform hover:scale-105"
             >
-              About Us
+              Run New Audit
             </Link>
           </div>
 
@@ -86,10 +59,11 @@ export default function Header() {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white"
+              className="text-tl-steel-light hover:text-tl-white"
+              aria-label="Toggle menu"
             >
               <svg
-                className="h-6 w-6"
+                className="h-7 w-7"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -100,8 +74,8 @@ export default function Header() {
                   strokeWidth="2"
                   d={
                     isMobileMenuOpen
-                      ? "M6 18L18 6M6 6l12 12"
-                      : "M4 6h16M4 12h16m-7 6h7"
+                      ? "M6 18L18 6M6 6l12 12" // X icon
+                      : "M4 6h16M4 12h16m-7 6h7" // Hamburger icon
                   }
                 />
               </svg>
@@ -111,23 +85,24 @@ export default function Header() {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden mt-4 space-y-2 bg-brand-navy-dark/90 backdrop-blur-sm rounded-md p-4">
+          <div className="lg:hidden mt-4 space-y-2 rounded-md p-4 bg-tl-dark border-t border-tl-steel/20">
             {hubs.map((hub) => (
               <Link
                 href={hub.href}
                 key={hub.name}
-                className="block px-4 py-2 text-sm text-white hover:text-brand-action-green hover:bg-white/10 rounded transition-colors"
+                className="flex items-center gap-3 px-4 py-3 text-lg font-medium text-tl-steel-light hover:text-tl-action hover:bg-tl-steel/10 rounded-lg transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {hub.name}
+                <hub.icon className="h-6 w-6" />
+                <span>{hub.name}</span>
               </Link>
             ))}
             <Link
-              href="/#cta"
-              className="w-full text-left bg-brand-action-green text-white font-bold py-3 px-4 rounded-lg mt-4 hover:bg-brand-info hover:text-white transition-all"
+              href="/#hero-funnel"
+              className="block w-full text-center bg-tl-action text-tl-dark font-bold py-3 px-4 rounded-lg mt-4 hover:bg-tl-action-hover transition-all"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              About Us
+              Run New Audit
             </Link>
           </div>
         )}

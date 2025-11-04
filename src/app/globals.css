@@ -3,20 +3,15 @@
 @import "tailwindcss/utilities";
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 240, 240, 240;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 15, 23, 42; /* slate-900 */
+  --background-start-rgb: 241, 245, 249; /* slate-100 */
+  --background-end-rgb: 255, 255, 255; /* white */
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  font-family: sans-serif;
+  background: rgb(var(--background-start-rgb));
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
 @layer utilities {
@@ -40,120 +35,12 @@ body {
     }
   }
 
-  /* Your custom pulse animation (if needed elsewhere) */
-  .pulse {
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
-  }
-
-  /* Tooltip utility */
+  /* Tooltip utility (if needed elsewhere) */
   .tooltip {
     @apply invisible absolute;
   }
 
   .has-tooltip:hover .tooltip {
     @apply visible z-50;
-  }
-
-  /* Custom range input styles */
-  input[type="range"] {
-    -webkit-appearance: none;
-    width: 100%;
-    background: transparent;
-  }
-
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #0a2540; /* brand-navy */
-    cursor: pointer;
-    margin-top: -8px;
-    transition: transform 0.2s;
-  }
-
-  input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-  }
-
-  input[type="range"]::-moz-range-thumb {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #0a2540; /* brand-navy */
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-
-  input[type="range"]::-moz-range-thumb:hover {
-    transform: scale(1.2);
-  }
-
-  input[type="range"]::-ms-thumb {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #0a2540; /* brand-navy */
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-
-  input[type="range"]::-ms-thumb:hover {
-    transform: scale(1.2);
-  }
-
-  input[type="range"]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 4px;
-    cursor: pointer;
-    background: #d1d5db; /* gray-300 */
-    border-radius: 5px;
-  }
-
-  input[type="range"]:focus::-webkit-slider-runnable-track {
-    background: #9ca3af; /* gray-400 */
-  }
-
-  input[type="range"]::-moz-range-track {
-    width: 100%;
-    height: 4px;
-    cursor: pointer;
-    background: #d1d5db; /* gray-300 */
-    border-radius: 5px;
-  }
-
-  input[type="range"]::-ms-track {
-    width: 100%;
-    height: 4px;
-    cursor: pointer;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-  }
-
-  /* Custom card borders */
-  .card-border-info {
-    border-top: 4px solid #3b82f6; /* brand-info */
-  }
-  .card-border-success {
-    border-top: 4px solid #10b981; /* brand-success */
-  }
-  .card-border-warning {
-    border-top: 4px solid #f59e0b; /* brand-warning */
-  }
-
-  /* Custom card hover effect */
-  .card-hover {
-    @apply transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl;
   }
 }

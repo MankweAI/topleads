@@ -12,26 +12,35 @@ module.exports = {
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       colors: {
-        // ALL FLAT KEY/VALUE PAIRS - DO NOT NEST!
-        "brand-navy": "#0A2540",
-        "brand-navy-light": "#1E3A5F",
-        "brand-navy-dark": "#061A2E",
-        "brand-light-gray": "#F6F9FC",
-        "brand-off-white": "#FFFFFF",
-        "brand-action-green": "#19D479",
-        "brand-action-green-light": "#6EFFB2",
-        "brand-action-green-dark": "#0D9B58",
-        "brand-steel": "#6B7C93",
-        "brand-steel-light": "#A0AEC0",
-        "brand-steel-dark": "#4A5568",
-        "brand-info": "#3B82F6",
-        "brand-success": "#10B981",
-        "brand-warning": "#F59E0B",
-        primary: "#2D3436",
-        secondary: "#27AE60",
-        accent: "#E67E22",
-        background: "#FDFEFE",
-        "text-dark": "#2C3E50",
+        // --- NEW VIBRANT THEME ---
+
+        // Base & Backgrounds
+        "tl-dark": "#0f172a", // slate-900 (For headers/footers)
+        "tl-bg": "#f1f5f9", // slate-100 (Main light background)
+        "tl-card": "#ffffff", // white (For cards on light bg)
+
+        // Text
+        "tl-text": "#0f172a", // slate-900 (Primary text on light bg)
+        "tl-steel": "#64748b", // slate-500 (Medium text)
+        "tl-steel-light": "#94a3b8", // slate-400 (Light text on dark bg)
+        "tl-white": "#ffffff", // white
+
+        // Primary Action (Lime Green)
+        "tl-action": "#84cc16", // lime-500
+        "tl-action-hover": "#a3e635", // lime-400
+        "tl-action-dark": "#4d7c0f", // lime-700
+
+        // Secondary Accent (Indigo)
+        "tl-accent": "#4f46e5", // indigo-600
+        "tl-accent-hover": "#6366f1", // indigo-500
+
+        // Warning / "Leak" Color (Orange)
+        "tl-leak": "#f97316", // orange-500
+        "tl-leak-light": "#ffedd5", // orange-100 (for backgrounds)
+
+        // Tertiary Accent (Cyan)
+        "tl-info": "#06b6d4", // cyan-500
+        "tl-info-light": "#cffafe", // cyan-100 (for backgrounds)
       },
     },
   },
