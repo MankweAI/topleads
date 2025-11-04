@@ -94,11 +94,11 @@ export default function Home() {
           ></div>
         </div>
 
-        {/* Hero Content: Removed global text-white, applied directly to elements */}
-        <div className="relative z-10 max-w-4xl">
+        {/* Hero Content */}
+        <div className="relative z-10 text-white max-w-4xl">
           <h1
             id="hero-heading"
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-5 leading-tight drop-shadow-md text-white"
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-5 leading-tight drop-shadow-md"
           >
             Stop Leaking Money.
           </h1>
@@ -124,8 +124,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-4 drop-shadow-sm">
             From "No-BS" Promise to Actionable Report
           </h2>
-          {/* Corrected text color for better contrast on dark bg */}
-          <p className="text-white/80 mb-12 drop-shadow-sm">
+          <p className="text-brand-steel-light mb-12 drop-shadow-sm">
             Our process is transparent. We show you exactly where the leaks are,
             then provide the tools to fix them.
           </p>
@@ -133,24 +132,21 @@ export default function Home() {
             <div className="flex flex-col items-center">
               <MagnifyingGlassIcon className="h-12 w-12 text-brand-info mb-4" />
               <h3 className="font-bold text-lg">1. Select Your Trade</h3>
-              {/* Corrected text color for better contrast on dark bg */}
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-brand-steel-light">
                 Choose your industry for a specialized diagnostic.
               </p>
             </div>
             <div className="flex flex-col items-center">
               <CalculatorIcon className="h-12 w-12 text-brand-info mb-4" />
               <h3 className="font-bold text-lg">2. Run the "Leak" Audit</h3>
-              {/* Corrected text color for better contrast on dark bg */}
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-brand-steel-light">
                 Enter your business info into our "No-BS" tool.
               </p>
             </div>
             <div className="flex flex-col items-center">
               <DocumentTextIcon className="h-12 w-12 text-brand-info mb-4" />
               <h3 className="font-bold text-lg">3. Get Your Report</h3>
-              {/* Corrected text color for better contrast on dark bg */}
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-brand-steel-light">
                 Receive an instant, data-rich report.
               </p>
             </div>
@@ -165,7 +161,6 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 max-w-5xl">
           <header className="text-center mb-12">
-            {/* These text colors (navy, steel) are correct on light-gray bg */}
             <h2 className="text-3xl font-bold text-brand-navy-dark tracking-tight">
               Start Your Free Audit
             </h2>
@@ -187,7 +182,6 @@ export default function Home() {
                     <hub.icon className="w-6 h-6" aria-hidden="true" />
                   </div>
                   <div>
-                    {/* These text colors (navy, steel) are correct on white bg */}
                     <h3 className="text-xl font-bold text-brand-navy-dark">
                       {hub.name}
                     </h3>
@@ -216,8 +210,9 @@ export default function Home() {
               <div key={promise.title} className="flex flex-col items-center">
                 <promise.icon className="h-12 w-12 text-brand-action-green mb-4" />
                 <h3 className="font-bold text-lg">{promise.title}</h3>
-                {/* Corrected text color for better contrast on dark bg */}
-                <p className="text-sm text-white/80">{promise.description}</p>
+                <p className="text-sm text-brand-steel-light">
+                  {promise.description}
+                </p>
               </div>
             ))}
           </div>
