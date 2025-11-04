@@ -23,14 +23,14 @@ export default function Header() {
   // Simple SVG Logo for "TOPLEADS" in white
   const Logo = () => (
     <Link href="/" className="flex items-center">
-      <span className="text-2xl font-extrabold text-tl-white tracking-wider">
+      <span className="text-2xl font-extrabold text-[#ffffff] tracking-wider">
         TOPLEADS
       </span>
     </Link>
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-tl-dark shadow-lg">
+    <header className="sticky top-0 z-50 bg-[#0f172a] shadow-lg">
       <nav className="container mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           <Logo />
@@ -41,7 +41,7 @@ export default function Header() {
               <Link
                 key={hub.name}
                 href={hub.href}
-                className="flex items-center gap-1 text-md font-medium text-tl-steel-light hover:text-tl-action transition-colors"
+                className="flex items-center gap-1 text-md font-medium text-[#94a3b8] hover:text-[#84cc16] transition-colors"
               >
                 <hub.icon className="h-5 w-5" />
                 <span>{hub.name}</span>
@@ -49,7 +49,7 @@ export default function Header() {
             ))}
             <Link
               href="/#hero-funnel" // Links to homepage hero
-              className="bg-tl-action text-tl-dark font-bold py-2 px-5 rounded-full hover:bg-tl-action-hover transition-all transform hover:scale-105"
+              className="bg-[#84cc16] text-[#0f172a] font-bold py-2 px-5 rounded-full hover:bg-[#a3e635] transition-all transform hover:scale-105"
             >
               Run New Audit
             </Link>
@@ -59,7 +59,7 @@ export default function Header() {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-tl-steel-light hover:text-tl-white"
+              className="text-[#94a3b8] hover:text-[#ffffff]"
               aria-label="Toggle menu"
             >
               <svg
@@ -85,12 +85,12 @@ export default function Header() {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden mt-4 space-y-2 rounded-md p-4 bg-tl-dark border-t border-tl-steel/20">
+          <div className="lg:hidden mt-4 space-y-2 rounded-md p-4 bg-[#0f172a] border-t border-[#64748b]/20">
             {hubs.map((hub) => (
               <Link
                 href={hub.href}
                 key={hub.name}
-                className="flex items-center gap-3 px-4 py-3 text-lg font-medium text-tl-steel-light hover:text-tl-action hover:bg-tl-steel/10 rounded-lg transition-colors"
+                className="flex items-center gap-3 px-4 py-3 text-lg font-medium text-[#94a3b8] hover:text-[#84cc16] hover:bg-[#64748b]/10 rounded-lg transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <hub.icon className="h-6 w-6" />
@@ -99,7 +99,7 @@ export default function Header() {
             ))}
             <Link
               href="/#hero-funnel"
-              className="block w-full text-center bg-tl-action text-tl-dark font-bold py-3 px-4 rounded-lg mt-4 hover:bg-tl-action-hover transition-all"
+              className="block w-full text-center bg-[#84cc16] text-[#0f172a] font-bold py-3 px-4 rounded-lg mt-4 hover:bg-[#a3e635] transition-all"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Run New Audit
