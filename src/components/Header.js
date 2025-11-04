@@ -6,22 +6,10 @@ import Image from "next/image";
 
 // Define Topleads hubs (our industries)
 const hubs = [
-  {
-    name: "Plumbers",
-    href: "/spokes/plumbers",
-  },
-  {
-    name: "HVAC",
-    href: "/spokes/hvac",
-  },
-  {
-    name: "Roofers",
-    href: "/spokes/roofers",
-  },
-  {
-    name: "Electricians",
-    href: "/spokes/electricians",
-  },
+  { name: "Plumbers", href: "/spokes/plumbers" },
+  { name: "HVAC", href: "/spokes/hvac" },
+  { name: "Roofers", href: "/spokes/roofers" },
+  { name: "Electricians", href: "/spokes/electricians" },
 ];
 
 // Simple SVG Logo for "TOPLEADS"
@@ -56,19 +44,17 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 bg-transparent transition-all duration-300 ${
         scrolled
           ? "bg-brand-navy-dark/90 backdrop-blur-md shadow-lg"
-          : "bg-brand-navy-dark/70 shadow-none"
+          : "bg-brand-navy-dark/90 backdrop-blur-md shadow-lg"
       }`}
     >
       <nav className="container mx-auto px-4 sm:px-6 py-4">
@@ -83,14 +69,14 @@ export default function Header() {
               <Link
                 key={hub.name}
                 href={hub.href}
-                className="text-md text-gray-200 hover:text-white transition-colors"
+                className="text-md text-white hover:text-brand-action-green transition-colors"
               >
                 {hub.name}
               </Link>
             ))}
             <Link
-              href="/#cta" // Placeholder link
-              className="bg-brand-action-green text-brand-navy-dark font-bold py-2 px-4 rounded-lg hover:opacity-90 transition-all"
+              href="/#cta"
+              className="bg-brand-action-green text-white font-bold py-2 px-4 rounded-lg hover:bg-brand-info hover:text-white transition-all"
             >
               About Us
             </Link>
@@ -130,15 +116,15 @@ export default function Header() {
               <Link
                 href={hub.href}
                 key={hub.name}
-                className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/10 rounded"
+                className="block px-4 py-2 text-sm text-white hover:text-brand-action-green hover:bg-white/10 rounded transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {hub.name}
               </Link>
             ))}
             <Link
-              href="/#cta" // Placeholder
-              className="w-full text-left bg-brand-action-green text-brand-navy-dark font-bold py-3 px-4 rounded-lg mt-4"
+              href="/#cta"
+              className="w-full text-left bg-brand-action-green text-white font-bold py-3 px-4 rounded-lg mt-4 hover:bg-brand-info hover:text-white transition-all"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About Us

@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
       >
         <div className="relative min-h-screen">
           {/* Video background moved to hub page, layout is clean */}
-          <Header />
+          {/* <Header /> */}
           {/* Main content pushed below the fixed header */}
           <main className="relative z-10">{children}</main>
         </div>
