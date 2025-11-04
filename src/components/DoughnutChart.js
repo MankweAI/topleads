@@ -1,3 +1,4 @@
+// src/components/DoughnutChart.js
 "use client";
 import React from "react";
 
@@ -10,7 +11,7 @@ const formatCurrency = (value) => {
   })}`;
 };
 
-const DoughnutChart = ({ data }) => {
+const InteractiveDoughnut = ({ data }) => {
   const { total, leaked, captured } = data;
   if (!total || total === 0) return null;
 
@@ -38,7 +39,7 @@ const DoughnutChart = ({ data }) => {
             cy={center}
             r={radius}
             fill="transparent"
-            stroke="var(--tw-color-gray-200)"
+            stroke="#e2e8f0" // slate-200
             strokeWidth={strokeWidth}
           />
           {/* Captured Revenue (Green) */}
@@ -47,19 +48,19 @@ const DoughnutChart = ({ data }) => {
             cy={center}
             r={radius}
             fill="transparent"
-            stroke="var(--tw-color-brand-success)"
+            stroke="#84cc16" // tl-action
             strokeWidth={strokeWidth}
             strokeDasharray={`${capturedDash} ${circumference}`}
             transform={`rotate(-90 ${center} ${center})`}
             strokeLinecap="round"
           />
-          {/* Leaked Revenue (Red) */}
+          {/* Leaked Revenue (Orange) */}
           <circle
             cx={center}
             cy={center}
             r={radius}
             fill="transparent"
-            stroke="var(--tw-color-brand-danger)"
+            stroke="#f97316" // tl-leak
             strokeWidth={strokeWidth}
             strokeDasharray={`${leakedDash} ${circumference}`}
             transform={`rotate(${
@@ -69,8 +70,8 @@ const DoughnutChart = ({ data }) => {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xs text-brand-steel">Leaked Revenue</span>
-          <span className="text-3xl font-bold text-brand-danger">
+          <span className="text-xs text-[#64748b]">Leaked Revenue</span>
+          <span className="text-3xl font-bold text-[#f97316]">
             {formatCurrency(leaked)}
           </span>
         </div>
@@ -80,19 +81,19 @@ const DoughnutChart = ({ data }) => {
       <div className="flex flex-col gap-2 mt-4 text-sm w-full max-w-xs">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-brand-danger"></span>
-            <span className="text-brand-steel-dark">Leaked (Simulated)</span>
+            <span className="w-3 h-3 rounded-full bg-[#f97316]"></span>
+            <span className="text-[#0f172a]">Leaked (Your Data)</span>
           </div>
-          <span className="font-semibold text-brand-danger">
+          <span className="font-semibold text-[#f97316]">
             {formatCurrency(leaked)}
           </span>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-brand-success"></span>
-            <span className="text-brand-steel-dark">Captured (Simulated)</span>
+            <span className="w-3 h-3 rounded-full bg-[#84cc16]"></span>
+            <span className="text-[#0f172a]">Captured (Simulated)</span>
           </div>
-          <span className="font-semibold text-brand-success">
+          <span className="font-semibold text-[#84cc16]">
             {formatCurrency(captured)}
           </span>
         </div>
@@ -101,5 +102,4 @@ const DoughnutChart = ({ data }) => {
   );
 };
 
-export default DoughnutChart;
-
+export default InteractiveDoughnut;

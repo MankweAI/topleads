@@ -34,8 +34,9 @@ const useInView = (options) => {
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      // Clean up the observer
+      if (ref.current && observer) {
+        observer.disconnect();
       }
     };
   }, [options]);
@@ -123,7 +124,7 @@ export default function Home() {
 
   return (
     // Base colors: light gray background, dark text
-    <div className="min-h-screen bg-[#f1f5f9] font-sans text-[#0f172a]">
+    <div className="min-h-screen bg-[#f1f5f9] font-sans text-[#0f172a] overflow-x-hidden">
       {/* --- SECTION 1: The "Hero-Funnel" --- */}
       <section
         id="hero-funnel"
@@ -139,7 +140,7 @@ export default function Home() {
             loop
             muted
             playsInline
-            poster="/image/daf_unit.png"
+            poster="/image/logo.png"
           />
           {/* Dark Overlay */}
           <div className="absolute inset-0 bg-[#0f172a]/70 z-10"></div>
@@ -187,7 +188,7 @@ export default function Home() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {/* Vibrant Indigo buttons */}
+              {/* Vibrant Indigo buttons with stagger animation */}
               <Link
                 href="/spokes/plumbers"
                 className="group flex items-center justify-center gap-2 bg-[#4f46e5] hover:bg-[#6366f1] text-[#ffffff] font-bold py-4 px-5 rounded-lg text-lg transition-all transform hover:scale-105 animate-fade-in-up"
@@ -281,13 +282,14 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* --- SECTION 3: "Data-Driven" Animated Stats (NEW) --- */}
+      {/* --- SECTION 3: "Data-Driven" Animated Stats --- */}
       <AnimatedSection className="py-20 px-6 text-center bg-[#f1f5f9]">
         <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-16 tracking-tight">
           Data-Driven. No Guesswork.
         </h2>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="flex flex-col items-center">
+            {/* Lime green for stats */}
             <AnimatedCounter targetValue={15000} prefix="R" suffix="+" />
             <p className="text-xl font-semibold text-[#64748b] mt-2">
               Avg. Leaked Revenue /mo
@@ -295,6 +297,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center">
+            {/* Lime green for stats */}
             <AnimatedCounter targetValue={90} suffix="%" />
             <p className="text-xl font-semibold text-[#64748b] mt-2">
               Customers Who Click the "Map Pack"
@@ -302,6 +305,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center">
+            {/* Lime green for stats */}
             <AnimatedCounter targetValue={30} suffix="s" />
             <p className="text-xl font-semibold text-[#64748b] mt-2">
               Time To Get Your Report
@@ -360,7 +364,89 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* --- SECTION 5: "Our 'No-BS' Promise" --- */}
+      {/* --- NEW SECTION 5: "The 'No-BS' Report Preview" --- */}
+      <AnimatedSection className="py-20 px-6 text-center bg-[#f1f5f9]">
+        <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-4 tracking-tight">
+          Get Your Instant 'Money Leak' Report.
+        </h2>
+        <p className="text-xl text-[#64748b] mb-16 max-w-3xl mx-auto">
+          We don't give you fluff. We give you data you can act on.
+        </p>
+
+        <div className="max-w-4xl mx-auto bg-[#ffffff] rounded-2xl shadow-2xl overflow-hidden border border-[#e2e8f0]">
+          {/* Mock Report Header */}
+          <div className="p-4 bg-[#ffffff] border-b border-[#e2e8f0]">
+            <h3 className="text-lg font-semibold text-left text-[#0f172a]">
+              Report for:{" "}
+              <span className="font-mono text-[#4f46e5]">Jono's Plumbing</span>
+            </h3>
+          </div>
+
+          {/* Mock Report Body */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+            {/* Widget 1: Traffic Leak */}
+            <div className="p-5 bg-[#f1f5f9] rounded-xl border border-[#e2e8f0] flex flex-col">
+              <h4 className="font-semibold text-[#0f172a] mb-3 text-left">
+                Traffic Leak (SEO)
+              </h4>
+              {/* Mock Chart */}
+              <div className="w-full h-24 bg-[#e2e8f0] rounded-md p-3 flex justify-around items-end animate-pulse">
+                <div className="w-1/5 bg-[#cbd5e1] h-1/2 rounded-t-sm"></div>
+                <div className="w-1/5 bg-[#f97316] h-1/4 rounded-t-sm"></div>{" "}
+                {/* The "leak" */}
+                <div className="w-1/5 bg-[#cbd5e1] h-3/4 rounded-t-sm"></div>
+                <div className="w-1/5 bg-[#cbd5e1] h-2/3 rounded-t-sm"></div>
+              </div>
+              <p className="text-lg text-left text-[#f97316] font-bold mt-3">
+                Rank: #14 (Critical)
+              </p>
+              {/* --- NEW COMMENTARY --- */}
+              <p className="text-sm text-left text-[#64748b] mt-2">
+                This means customers are finding your competitors first. If
+                you're not in the top 3, you're invisible.
+              </p>
+            </div>
+
+            {/* Widget 2: Trust Leak */}
+            <div className="p-5 bg-[#f1f5f9] rounded-xl border border-[#e2e8f0] flex flex-col">
+              <h4 className="font-semibold text-[#0f172a] mb-3 text-left">
+                Trust Leak (Reviews)
+              </h4>
+              <div className="text-5xl font-extrabold text-[#f97316] my-4">
+                3.4 ★
+              </div>
+              <p className="text-sm text-[#64748b] font-semibold">
+                Competitor Avg: 4.8 ★
+              </p>
+              {/* --- NEW COMMENTARY --- */}
+              <p className="text-sm text-left text-[#64748b] mt-2">
+                Be honest: would you hire a 3.4-star business? Customers see
+                this and immediately call your 4.8-star competitor.
+              </p>
+            </div>
+
+            {/* Widget 3: Enquiry Leak */}
+            <div className="p-5 bg-[#f1f5f9] rounded-xl border border-[#e2e8f0] flex flex-col">
+              <h4 className="font-semibold text-[#0f172a] mb-3 text-left">
+                Enquiry Leak (Calls)
+              </h4>
+              <div className="text-5xl font-extrabold text-[#f97316] my-4">
+                ~25
+              </div>
+              <p className="text-sm text-[#64748b] font-semibold">
+                Missed Enquiries /mo
+              </p>
+              {/* --- NEW COMMENTARY --- */}
+              <p className="text-sm text-left text-[#64748b] mt-2">
+                That's 25 jobs you never got to quote on. These are visitors who
+                left your site, likely after hours, and called a competitor.
+              </p>
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* --- SECTION 6: "Our 'No-BS' Promise" (Was Section 5) --- */}
       <AnimatedSection className="max-w-6xl mx-auto py-20 px-6 text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-16 tracking-tight">
           Our "No-BS" Promise
@@ -403,7 +489,7 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* --- SECTION 6: Final CTA --- */}
+      {/* --- SECTION 7: Final CTA (Was Section 6) --- */}
       {/* Dark background for final CTA */}
       <section className="w-full py-20 px-6 text-center bg-[#0f172a]">
         <h2 className="text-4xl md:text-5xl font-extrabold text-[#ffffff] mb-4 tracking-tight">
