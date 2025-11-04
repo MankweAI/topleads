@@ -1,39 +1,17 @@
-// Remove or comment out the Inter import
-// import { Inter } from "next/font/google";
-
-// Import Source Sans 3 instead
-import { Source_Sans_3 } from "next/font/google";
-
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer"; // Import Footer
 
-// Configure Source Sans 3
-const sourceSans = Source_Sans_3({
-  subsets: ["latin"],
-  variable: "--font-source-sans", // Use a descriptive variable name
-  display: "swap", // Ensures text is visible while font loads
-  // Optionally specify weights if needed, e.g., weights: ['400', '600', '700']
-});
+// NO FUNCTION CALLS - GeistSans and GeistMono are objects
 
+// Update metadata for Topleads
 export const metadata = {
-  title: "Effluentic - Wastewater Treatment Sizing Tool",
+  title: "Topleads - Stop Leaking Money. Start Booking Jobs.",
   description:
-    "Instant pre-feasibility reports for industrial wastewater treatment systems.",
+    "We help skilled trades (Plumbers, HVAC, Roofers, Electricians) in South Africa fix their 'money leaks' and capture lost revenue.",
 };
-
-// Updated Footer Component (code remains the same)
-function Footer() {
-  return (
-    <footer className="py-8 bg-black/50 backdrop-blur-sm text-center text-gray-300 text-sm relative z-10">
-      <div className="container mx-auto px-6">
-        <p>
-          &copy; {new Date().getFullYear()} Effluentic. All rights reserved.
-        </p>
-        <p className="mt-2">For Engineering Professionals in South Africa</p>
-      </div>
-    </footer>
-  );
-}
 
 export default function RootLayout({ children }) {
   return (
@@ -41,14 +19,18 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      {/* Apply the new font variable to the body */}
-      <body className={`${sourceSans.variable} font-sans`}>
-        {" "}
-        {/* Use sourceSans.variable */}
-        <main className="relative z-10">{children}</main>
+      {/* Apply the variables directly from the imported objects */}
+      <body
+        className={`${GeistSans.variable} ${GeistMono.variable} font-sans bg-brand-light-gray`}
+      >
+        <div className="relative min-h-screen">
+          {/* Video background moved to hub page, layout is clean */}
+          <Header />
+          {/* Main content pushed below the fixed header */}
+          <main className="relative z-10">{children}</main>
+        </div>
         <Footer />
       </body>
     </html>
   );
 }
-  

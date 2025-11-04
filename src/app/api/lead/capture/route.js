@@ -1,56 +1,51 @@
-import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
     const body = await request.json();
-    // Added concept_focus to capture
-    const { name, company, email, report_id, cta_type, concept_focus } = body;
 
-    if (!email || !report_id || !cta_type) {
+    // Get the new Topleads fields
+    const { name, email, phone, website_url } = body;
+
+    // Validate required fields
+    if (!name || !email || !phone || !website_url) {
       return NextResponse.json(
-        { error: "Missing required fields: email, report_id, cta_type" },
+        { error: "Missing required fields." },
         { status: 400 }
       );
     }
 
-    // concept_focus is good context but not strictly required for lead capture itself
-    const leadData = {
-      name,
-      company,
-      email,
-      report_id,
-      cta_type,
-      concept_focus,
-    };
-
+    // Insert into the 'leads' table
     const { data, error } = await supabase
       .from("leads")
-      .insert(leadData)
-      .select("id")
-      .single();
+      .insert([
+        {
+          name,
+          email,
+          phone,
+          website_url,
+          source: "Topleads Funnel", // Add a source for tracking
+        },
+      ])
+      .select();
 
     if (error) {
-      console.error("Supabase error inserting lead:", error.message);
-      throw new Error(`Supabase error: ${error.message}`);
+      console.error("Supabase error:", error.message);
+      return NextResponse.json(
+        { error: "Could not save lead." },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(
-      {
-        success: true,
-        leadId: data.id,
-        message: "Lead captured successfully.",
-      },
+      { message: "Lead captured successfully", data },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("API Error in /api/lead/capture:", error);
+  } catch (err) {
+    console.error("API Error:", err.message);
     return NextResponse.json(
-      {
-        error: `Failed to capture lead: ${
-          error.message || "Internal server error"
-        }`,
-      },
+      { error: "An unexpected error occurred." },
       { status: 500 }
     );
   }

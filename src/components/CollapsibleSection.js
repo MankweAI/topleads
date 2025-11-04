@@ -1,4 +1,4 @@
-// src/components/CollapsibleSection.js
+// This component is well-built. I'll just adjust the styling to match the new `brand-info` color.
 "use client";
 
 import { useState } from "react";
@@ -10,11 +10,10 @@ export default function CollapsibleSection({ title, children }) {
     <div className="border-b border-gray-200 py-4">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center text-left text-lg font-semibold text-brand-navy-dark hover:text-blue-600 focus:outline-none transition-colors"
+        className="w-full flex justify-between items-center text-left text-lg font-semibold text-brand-navy-dark hover:text-brand-info focus:outline-none transition-colors"
         aria-expanded={isOpen}
       >
         <span>{title}</span>
-        {/* Improved Chevron Icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`h-5 w-5 transform transition-transform duration-300 ${
@@ -30,10 +29,9 @@ export default function CollapsibleSection({ title, children }) {
           />
         </svg>
       </button>
-      {/* Smooth transition for content */}
       <div
         className={`overflow-hidden transition-all duration-500 ease-in-out ${
-          isOpen ? "max-h-screen mt-4 opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-[1000px] mt-4 opacity-100" : "max-h-0 opacity-0" // Use max-h-[1000px] for a safe large value
         }`}
       >
         <div className="text-brand-steel-dark prose prose-sm sm:prose-base max-w-none">

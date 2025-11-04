@@ -8,11 +8,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        // Update the sans font family to use the new variable
-        sans: ["var(--font-source-sans)", "sans-serif"],
+        // Use Geist as the primary sans font, modeled after Effluentic
+        sans: ["var(--font-geist-sans)", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
       },
       colors: {
-        // Your existing color definitions...
+        // Adopted the professional Effluentic color palette
         "brand-navy": {
           DEFAULT: "#0A2540",
           light: "#1E3A5F",
@@ -33,8 +34,8 @@ module.exports = {
         "brand-info": "#3B82F6",
         "brand-success": "#10B981",
         "brand-warning": "#F59E0B",
+        "brand-danger": "#EF4444", // Added a danger color
       },
-      // Keep other extensions if you have them
     },
   },
   plugins: [require("@tailwindcss/typography")],

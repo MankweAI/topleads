@@ -21,7 +21,7 @@ const formatNumber = (value, decimals = 1) => {
 };
 
 export default function LeadCaptureModal({
-  reportContext, // Changed from reportId to reportContext object
+  reportContext, // The full report object
   ctaType,
   conceptFocus,
   onClose,
@@ -29,9 +29,9 @@ export default function LeadCaptureModal({
 }) {
   const [formData, setFormData] = useState({
     name: "",
-    company: "",
+    company: reportContext?.business_name || "", // Pre-fill company name
     email: "",
-    project_notes: "", // Added project notes field
+    project_notes: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -51,22 +51,18 @@ export default function LeadCaptureModal({
     setError("");
 
     try {
-      // Prepare lead data including the context and notes
       const leadData = {
         name: formData.name,
         company: formData.company,
         email: formData.email,
         project_notes: formData.project_notes,
-        report_id: reportContext?.id || "live-session", // Use context ID or placeholder
+        report_id: reportContext?.id,
         cta_type: ctaType,
         concept_focus: conceptFocus,
-        // Include key context parameters directly in the lead data for easy viewing
+        // Pass Topleads-specific context
         context_industry: reportContext?.industry,
-        context_flow_rate: reportContext?.flow_rate_m3_hr,
-        context_tss: reportContext?.tss_mg_l,
-        context_calc_area: reportContext?.calculatedArea,
-        context_calc_capex_max: reportContext?.calculatedCapexMax,
-        context_calc_opex: reportContext?.calculatedOpex,
+        context_calc_capex_max: reportContext?.simulated_missed_revenue, // Re-using field for "missed revenue"
+        context_calc_opex: reportContext?.simulated_missed_calls, // Re-using field for "missed calls"
       };
 
       const response = await fetch("/api/lead/capture", {
@@ -84,7 +80,7 @@ export default function LeadCaptureModal({
         );
       }
 
-      onFormSubmit();
+      onFormSubmit(); // This triggers the "Thank You" message on the report page
     } catch (err) {
       console.error("Lead Capture Submit Error:", err);
       setError(err.message || "An unexpected error occurred.");
@@ -93,11 +89,10 @@ export default function LeadCaptureModal({
     }
   };
 
-  // Determine modal content based on CTA type (only 'review' now)
-  const isReview = ctaType === "review";
-  const modalTitle = "Request Your Free Engineering Review";
-  const modalSubtext = `An engineer will review your preliminary DAF design (based on the parameters below) and follow up via email to discuss your specific project needs.`;
-  const buttonText = "Submit Request for Review";
+  const modalTitle = "Request Your Free Strategy Call";
+  const modalSubtext =
+    "An expert will review your 'Money Leak' report and follow up via email to schedule your 15-minute 'No-BS' strategy call.";
+  const buttonText = "Submit Request";
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 fade-in px-4 py-8 overflow-y-auto">
@@ -112,61 +107,49 @@ export default function LeadCaptureModal({
         </button>
 
         <div className="mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+          <h2 className="text-xl sm:text-2xl font-bold text-brand-navy-dark">
             {modalTitle}
           </h2>
-          <p className="text-gray-500 mt-2 text-sm sm:text-base">
+          <p className="text-brand-steel mt-2 text-sm sm:text-base">
             {modalSubtext}
           </p>
         </div>
 
         {/* Display Context Summary */}
-        {reportContext && (
-          <div className="mb-6 p-4 border border-blue-200 bg-blue-50 rounded-lg text-sm space-y-2">
-            <h3 className="font-semibold text-blue-800 mb-2">
-              Your Preliminary Design Summary:
-            </h3>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-              <span className="text-gray-600">Industry:</span>
-              <span className="font-medium text-gray-900">
-                {reportContext.industry?.replace(/_/g, " ") || "N/A"}
-              </span>
-              <span className="text-gray-600">Flow Rate:</span>
-              <span className="font-medium text-gray-900">
-                {formatNumber(reportContext.flow_rate_m3_hr)} m³/hr
-              </span>
-              <span className="text-gray-600">FOG & TSS:</span>
-              <span className="font-medium text-gray-900">
-                {formatNumber(reportContext.tss_mg_l, 0)} mg/L
-              </span>
-              <span className="text-gray-600">Calculated Area:</span>
-              <span className="font-medium text-gray-900">
-                {formatNumber(reportContext.calculatedArea)} m²
-              </span>
-              <span className="text-gray-600">Budget CAPEX Max:</span>
-              <span className="font-medium text-gray-900">
-                {formatCurrency(reportContext.calculatedCapexMax)}
-              </span>
-              <span className="text-gray-600">Est. Annual OPEX:</span>
-              <span className="font-medium text-gray-900">
-                {formatCurrency(reportContext.calculatedOpex)}
-              </span>
-            </div>
-            {/* Display override info if used */}
-            {(reportContext.override_hlr || reportContext.override_slr) && (
-              <p className="text-xs text-blue-700 italic mt-2">
-                Note: Calculation based on your overridden HLR/SLR values.
-              </p>
-            )}
+        <div className="mb-6 p-4 border border-blue-200 bg-blue-50 rounded-lg text-sm space-y-2">
+          <h3 className="font-semibold text-blue-800 mb-2">
+            Your "Money Leak" Report Summary:
+          </h3>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+            <span className="text-gray-600">Business:</span>
+            <span className="font-medium text-gray-900">
+              {reportContext.business_name}
+            </span>
+            <span className="text-gray-600">Industry:</span>
+            <span className="font-medium text-gray-900">
+              {capitalize(reportContext.industry)}
+            </span>
+            <span className="text-gray-600">Map Rank:</span>
+            <span className="font-medium text-brand-danger">
+              #{reportContext.simulated_meo_rank}
+            </span>
+            <span className="text-gray-600">Review Score:</span>
+            <span className="font-medium text-brand-danger">
+              {reportContext.simulated_review_score} ★
+            </span>
+            <span className="text-gray-600">Missed Revenue:</span>
+            <span className="font-medium text-brand-danger">
+              {formatCurrency(reportContext.simulated_missed_revenue)}/mo
+            </span>
           </div>
-        )}
+        </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-brand-steel-dark"
             >
               Full Name
             </label>
@@ -177,13 +160,13 @@ export default function LeadCaptureModal({
               autoComplete="name"
               value={formData.name}
               onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-info focus:border-brand-info sm:text-sm"
             />
           </div>
           <div>
             <label
               htmlFor="company"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-brand-steel-dark"
             >
               Company
             </label>
@@ -194,15 +177,15 @@ export default function LeadCaptureModal({
               autoComplete="organization"
               value={formData.company}
               onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-info focus:border-brand-info sm:text-sm"
             />
           </div>
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-brand-steel-dark"
             >
-              Email Address <span className="text-red-500">*</span>
+              Email Address <span className="text-brand-danger">*</span>
             </label>
             <input
               type="email"
@@ -212,18 +195,17 @@ export default function LeadCaptureModal({
               value={formData.email}
               onChange={handleInputChange}
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-info focus:border-brand-info sm:text-sm"
               aria-describedby="email-error"
             />
           </div>
 
-          {/* Project Notes Field */}
           <div>
             <label
               htmlFor="project_notes"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-brand-steel-dark"
             >
-              Project Notes / Specific Questions (Optional)
+              What's your biggest challenge right now? (Optional)
             </label>
             <textarea
               name="project_notes"
@@ -231,15 +213,15 @@ export default function LeadCaptureModal({
               rows="3"
               value={formData.project_notes}
               onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              placeholder="E.g., Specific site constraints, target effluent quality, existing treatment steps..."
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-info focus:border-brand-info sm:text-sm"
+              placeholder="E.g., 'I get calls but they aren't the right customers', 'My competitors are everywhere', 'I need more high-value install jobs'..."
             ></textarea>
           </div>
 
           {error && (
             <p
               id="email-error"
-              className="text-red-500 text-sm mt-2 text-center"
+              className="text-brand-danger text-sm mt-2 text-center"
             >
               {error}
             </p>
@@ -248,14 +230,30 @@ export default function LeadCaptureModal({
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full flex justify-center items-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 transition-colors mt-6"
+            className="w-full flex justify-center items-center bg-brand-info text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-brand-steel transition-colors mt-6"
           >
             {isLoading ? (
               <>
-                {/* SVG Loader */}
                 <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" /* ... */
-                ></svg>
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
                 Submitting Request...
               </>
             ) : (
