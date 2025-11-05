@@ -139,7 +139,7 @@ function ReportDiagnostic() {
                 </h2>
                 <p className="text-lg text-[#64748b] max-w-lg mx-auto">
                   Thank you. An expert will review your report and be in touch
-                  shortly to schedule your 15-minute "No-BS" strategy call.
+                  shortly to schedule your 15-minute &quot;No-BS&quot; strategy call.
                 </p>
               </div>
             ) : (
@@ -226,7 +226,7 @@ function ReportDiagnostic() {
                 </h2>
                 <p className="text-lg text-[#64748b] mt-1">
                   This is your{" "}
-                  <span className="font-semibold">"Trust Leak"</span>. Be
+                  <span className="font-semibold">&quot;Trust Leak&quot;</span>. Be
                   honest, customers will call your 4.8-star competitor over your
                   3.5-star rating every time.
                 </p>
@@ -248,13 +248,13 @@ function ReportDiagnostic() {
                 </h2>
                 <p className="text-lg text-[#64748b] mt-1">
                   This is your{" "}
-                  <span className="font-semibold">"Traffic Leak"</span>. If
-                  you're not in the 3-Pack, you're invisible. (Check now: Google
-                  "
+                  <span className="font-semibold">&quot;Traffic Leak&quot;</span>. If
+                  you&apos;re not in the 3-Pack, you&apos;re invisible. (Check now: Google
+                  &quot;
                   <span className="font-semibold">
                     {reportData.industry} in {reportData.suburb}
                   </span>
-                  ")
+                  &quot;)
                 </p>
               </div>
             </div>
@@ -269,7 +269,7 @@ function ReportDiagnostic() {
                 }`}
               >
                 <span className="font-bold text-[#0f172a]">
-                  Top 3 "Map Pack"
+                  Top 3 &quot;Map Pack&quot;
                 </span>
                 <br />
                 <span className="text-sm text-[#64748b]">
@@ -319,7 +319,7 @@ function ReportDiagnostic() {
                     : "bg-[#f1f5f9] border-transparent hover:bg-[#e2e8f0]"
                 }`}
               >
-                <span className="font-bold text-[#0f172a]">I Don't Know</span>
+                <span className="font-bold text-[#0f172a]">I Don&apos;t Know</span>
                 <br />
                 <span className="text-sm text-[#64748b]">
                   This is a leak in itself.
@@ -339,8 +339,8 @@ function ReportDiagnostic() {
                 </h2>
                 <p className="text-lg text-[#64748b] mt-1">
                   This is your{" "}
-                  <span className="font-semibold">"Enquiry Leak"</span>. Contact
-                  forms are slow. If you don't answer 24/7, they call someone
+                  <span className="font-semibold">&quot;Enquiry Leak&quot;</span>. Contact
+                  forms are slow. If you don&apos;t answer 24/7, they call someone
                   else.
                 </p>
               </div>

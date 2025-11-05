@@ -99,18 +99,18 @@ export default function LeadCaptureModal({
             Request Your Free Strategy Call
           </h2>
           <p className="text-[#64748b] mt-2 text-base">
-            You've found a{" "}
+            You&apos;ve found a{" "}
             <span className="font-bold text-[#f97316]">
               {formatCurrency(totalLeak)}/mo
             </span>{" "}
-            leak. Let's schedule your 15-min "No-BS" call to plan the fix.
+            leak. Let&apos;s schedule your 15-min &quot;No-BS&quot; call to plan the fix.
           </p>
         </div>
 
         {/* Display Context Summary */}
         <div className="mb-6 p-4 border border-[#cffafe] bg-[#cffafe]/50 rounded-lg text-sm space-y-2">
           <h3 className="font-semibold text-[#06b6d4] mb-2">
-            Your "Money Leak" Diagnostic:
+            Your &quot;Money Leak&quot; Diagnostic:
           </h3>
           <div className="grid grid-cols-2 gap-x-4 gap-y-1">
             <span className="text-[#64748b]">Business:</span>

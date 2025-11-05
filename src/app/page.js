@@ -181,7 +181,7 @@ export default function Home() {
             style={{ animationDelay: "200ms" }}
           >
             Your plumbing, electrical, HVAC or roofing business is losing jobs
-            to competitors. We'll show you exactly where.
+            to competitors. We&apos;ll show you exactly where.
           </p>
 
           {/* The "Tool" CTA */}
@@ -237,7 +237,7 @@ export default function Home() {
       {/* White background for contrast */}
       <AnimatedSection className="py-20 px-6 text-center bg-[#ffffff]">
         <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-4 tracking-tight">
-          We Find the 3 "Money Leaks"
+          We Find the 3 &quot;Money Leaks&quot;
         </h2>
         {/* Medium steel text */}
         <p className="text-xl text-[#64748b] mb-16 max-w-3xl mx-auto">
@@ -253,8 +253,8 @@ export default function Home() {
               1. The Traffic Leak (SEO)
             </h3>
             <p className="text-base text-[#64748b] leading-relaxed">
-              If you're not on the first page of Google or in the "Map Pack",
-              customers can't find you. You're losing clicks, calls, and jobs to
+              If you&apos;re not on the first page of Google or in the &quot;Map Pack&quot;,
+              customers can&apos;t find you. You&apos;re losing clicks, calls, and jobs to
               the competitors who are.
             </p>
           </div>
@@ -281,7 +281,7 @@ export default function Home() {
               3. The Enquiry Leak
             </h3>
             <p className="text-base text-[#64748b] leading-relaxed">
-              60% of customers browse after 5 PM. If your site can't capture
+              60% of customers browse after 5 PM. If your site can&apos;t capture
               their details 24/7 with a chatbot, they leave and call someone
               else.
             </p>
@@ -307,7 +307,7 @@ export default function Home() {
             {/* Lime green for stats */}
             <AnimatedCounter targetValue={90} suffix="%" />
             <p className="text-xl font-semibold text-[#64748b] mt-2">
-              Customers Who Click the "Map Pack"
+              Customers Who Click the &quot;Map Pack&quot;
             </p>
           </div>
 
@@ -364,7 +364,7 @@ export default function Home() {
               Get Your Instant Report
             </h3>
             <p className="text-base text-[#64748b]">
-              See your 'Money Leaks' immediately. No waiting for a salesperson
+              See your &apos;Money Leaks&apos; immediately. No waiting for a salesperson
               to call you.
             </p>
           </div>
@@ -374,10 +374,10 @@ export default function Home() {
       {/* --- SECTION 5: "The 'No-BS' Report Preview" (UPDATED) --- */}
       <AnimatedSection className="py-20 px-6 text-center bg-[#f1f5f9]">
         <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-4 tracking-tight">
-          Get Your Instant 'Money Leak' Report
+          Get Your Instant &apos;Money Leak&apos; Report
         </h2>
         <p className="text-xl text-[#64748b] mb-16 max-w-3xl mx-auto">
-          We don't give you fluff. We give you data you can act on.
+          We don&apos;t give you fluff. We give you data you can act on.
         </p>
 
         {/* --- THIS IS THE MODIFIED BLOCK --- */}
@@ -386,7 +386,7 @@ export default function Home() {
           <div className="p-4 bg-[#ffffff] border-b border-[#e2e8f0]">
             <h3 className="text-lg font-semibold text-left text-[#0f172a]">
               Report for:{" "}
-              <span className="font-mono text-[#4f46e5]">Jono's Plumbing</span>
+              <span className="font-mono text-[#4f46e5]">Jono&apos;s Plumbing</span>
             </h3>
           </div>
 
@@ -428,7 +428,7 @@ export default function Home() {
       {/* --- SECTION 6: "Our 'No-BS' Promise" --- */}
       <AnimatedSection className="max-w-6xl mx-auto py-20 px-6 text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-16 tracking-tight">
-          Our "No-BS" Promise
+          Our &quot;No-BS&quot; Promise
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex flex-col items-center bg-[#ffffff] rounded-xl p-8 shadow-lg border border-[#f1f5f9] card-lift">
@@ -476,7 +476,7 @@ export default function Home() {
         </h2>
         {/* Light steel text */}
         <p className="text-xl text-[#94a3b8] mb-10">
-          It's free, instant, and takes 30 seconds.
+          It&apos;s free, instant, and takes 30 seconds.
         </p>
         <button
           onClick={scrollToHero}

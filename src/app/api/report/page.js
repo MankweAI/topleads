@@ -54,7 +54,7 @@ function ReportContent() {
                 </h2>
               </div>
               <p className="text-lg text-brand-steel">
-                You&apos;re not appearing in the Google '3-Pack.' 76% of all
+                You&apos;re not appearing in the Google &apos;3-Pack.&apos; 76% of all
                 local searches hire from the map.
                 <strong>
                   {" "}
@@ -71,7 +71,7 @@ function ReportContent() {
                 </h2>
               </div>
               <p className="text-lg text-brand-steel">
-                We found no "Click-to-Get-Reviews" system. More 5-star reviews
+                We found no &quot;Click-to-Get-Reviews&quot; system. More 5-star reviews
                 is the fastest way to
                 <strong> build trust and win new clients.</strong>
               </p>
