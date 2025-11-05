@@ -1,10 +1,8 @@
-// src/app/api/lead/capture/route.js
 import { NextResponse } from "next/server";
+import { Resend } from "resend"; // Import Resend
 
-// TODO: Install your preferred email provider
-// Example using Resend: `npm install resend`
-// import { Resend } from 'resend';
-// const resend = new Resend(process.env.RESEND_API_KEY);
+// Instantiate Resend with your API key from .env.local
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Helper to format currency
 const formatCurrency = (value) => {
@@ -25,8 +23,8 @@ export async function POST(request) {
       phone,
       company,
       website_url,
-      context_data,
-      context_total_leak,
+      context_data, // The user's answers
+      context_total_leak, // The final R amount
     } = body;
 
     // Validate required fields
@@ -38,12 +36,12 @@ export async function POST(request) {
     }
 
     // --- Prepare Email Content ---
-    const subject = `New Topleads Lead: ${company} (${formatCurrency(
+    const subject = `New LeakageFinder Lead: ${company} (${formatCurrency(
       context_total_leak
     )}/mo Leak)`;
 
     const emailHtml = `
-      <h1>New Topleads Strategy Call Request</h1>
+      <h1>New LeakageFinder Strategy Call Request</h1>
       <p>A new high-value lead just came through the funnel.</p>
       <hr>
       <h2>Contact Details</h2>
@@ -74,14 +72,10 @@ export async function POST(request) {
       </ul>
     `;
 
-    // --- TODO: Send Email Logic ---
-    // This is where you plug in your email provider.
-    //
-    // Example using Resend (make sure to set RESEND_API_KEY in .env.local):
-    /*
+    // --- Send Email Logic ---
     const { data, error } = await resend.emails.send({
-      from: 'Topleads Funnel <leads@yourdomain.com>',
-      to: ['your-email@yourcompany.com'], // Your sales email
+      from: "LeakageFinder Funnel <onboarding@resend.dev>", // TODO: Change to your verified domain
+      to: ["your-email@yourcompany.com"], // TODO: Change to your email
       subject: subject,
       html: emailHtml,
     });
@@ -93,19 +87,10 @@ export async function POST(request) {
         { status: 500 }
       );
     }
-    */
-    // --- End of TODO section ---
+    // --- End of Email Logic ---
 
-    // For testing, we'll just log the email content to the console
-    console.log("--- NEW LEAD CAPTURED (Email Shell) ---");
-    console.log("Subject:", subject);
-    console.log("Body:", emailHtml);
-    console.log("-----------------------------------------");
-
-    // We must return a "data" object, even if it's just a message.
-    // The modal `handleSubmit` function expects it.
     return NextResponse.json(
-      { message: "Lead captured successfully", data: { success: true } },
+      { message: "Lead captured successfully", data },
       { status: 200 }
     );
   } catch (err) {

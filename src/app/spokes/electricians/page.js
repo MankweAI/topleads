@@ -1,4 +1,3 @@
-// src/app/spokes/plumbers/page.js
 "use client";
 
 import { useState } from "react";
@@ -6,41 +5,41 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SpokeInput from "@/components/SpokeInput";
 import Header from "@/components/Header";
-import { WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
+import { BoltIcon } from "@heroicons/react/24/solid";
 
 // --- Simplified Configuration ---
 const pageConfig = {
-  industry: "plumbers",
-  title: "Plumber's Money-Leak Audit",
-  Icon: WrenchScrewdriverIcon,
-  conceptFocus: "plumbers_industry",
+  industry: "electricians",
+  title: "Electrician's Money-Leak Audit",
+  Icon: BoltIcon,
+  conceptFocus: "electricians_industry",
   fields: [
     {
       name: "businessName",
       label: "Your Business Name",
       type: "text",
-      placeholder: "e.g., Jono's Plumbing",
-      tooltip: "The name of your plumbing business.",
+      placeholder: "e.g., Jono's Electrical",
+      tooltip: "The name of your electrical business.",
     },
     {
       name: "websiteUrl",
       label: "Your Website URL",
       type: "text",
-      placeholder: "e.g., jonosplumbing.co.za",
+      placeholder: "e.g., jonoselectrical.co.za",
       tooltip: "Your business website address.",
     },
     {
       name: "suburb",
       label: "Your Main Suburb",
       type: "text",
-      placeholder: "e.g., Sandton",
+      placeholder: "e.g., Fourways",
       tooltip: "The main suburb you serve. This helps check your map ranking.",
     },
   ],
 };
 
 // --- New Spoke Page Component ---
-export default function PlumbersSpoke() {
+export default function ElectriciansSpoke() {
   const router = useRouter();
 
   const initialFormData = {
@@ -73,8 +72,6 @@ export default function PlumbersSpoke() {
     }
 
     try {
-      // --- THIS IS THE NEW LOGIC ---
-      // 1. Create URL search parameters
       const params = new URLSearchParams();
       params.append("businessName", formData.businessName);
       params.append("websiteUrl", formData.websiteUrl);
@@ -82,9 +79,7 @@ export default function PlumbersSpoke() {
       params.append("industry", formData.industry);
       params.append("conceptFocus", formData.conceptFocus);
 
-      // 2. No API call. Just redirect to Step 2.
       router.push(`/report?${params.toString()}`);
-      // No need to set isLoading(false) as we are navigating away
     } catch (err) {
       setError(err.message || "An unexpected error occurred.");
       setIsLoading(false);
@@ -98,7 +93,6 @@ export default function PlumbersSpoke() {
       <Header />
       <main className="flex-grow flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-lg mx-auto">
-          {/* (The rest of the component's JSX is identical to the previous step) */}
           <div className="bg-[#ffffff] p-8 md:p-10 rounded-xl shadow-2xl border border-[#e2e8f0] animate-fade-in-up">
             <div className="text-center mb-8">
               <Icon className="w-16 h-16 text-[#4f46e5] mx-auto mb-4" />
@@ -172,6 +166,3 @@ export default function PlumbersSpoke() {
     </div>
   );
 }
-
-// *** APPLY THIS SAME LOGIC TO ALL OTHER SPOKE PAGES ***
-// (hvac, roofers, electricians)

@@ -4,9 +4,9 @@ import "./globals.css";
 // import Header from "@/components/Header"; // Header is no longer global
 import Footer from "@/components/Footer"; // Import Footer
 
-// Update metadata for Topleads
+// Update metadata for LeakageFinder
 export const metadata = {
-  title: "Topleads - Stop Leaking Money. Start Booking Jobs.",
+  title: "LeakageFinder - Stop Leaking Money. Start Booking Jobs.",
   description:
     "We help skilled trades (Plumbers, HVAC, Roofers, Electricians) in South Africa fix their 'money leaks' and capture lost revenue.",
 };

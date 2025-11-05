@@ -1,15 +1,9 @@
 // src/components/DoughnutChart.js
 "use client";
 import React from "react";
+import { formatCurrency } from "@/lib/formatters";
 
-// Helper to format currency
-const formatCurrency = (value) => {
-  if (typeof value !== "number") return "N/A";
-  return `R ${value.toLocaleString("en-ZA", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  })}`;
-};
+
 
 const InteractiveDoughnut = ({ data }) => {
   const { total, leaked, captured } = data;

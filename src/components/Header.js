@@ -9,7 +9,7 @@ import {
   BoltIcon,
 } from "@heroicons/react/24/solid";
 
-// Define Topleads hubs (for the nav)
+// Define LeakageFinder hubs (for the nav)
 const hubs = [
   { name: "Plumbers", href: "/spokes/plumbers", icon: WrenchScrewdriverIcon },
   { name: "HVAC", href: "/spokes/hvac", icon: FireIcon },
@@ -20,11 +20,11 @@ const hubs = [
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Simple SVG Logo for "TOPLEADS" in white
+  // Simple SVG Logo for "LeakageFinder" in white
   const Logo = () => (
     <Link href="/" className="flex items-center">
       <span className="text-2xl font-extrabold text-[#ffffff] tracking-wider">
-        TOPLEADS
+        LeakageFinder
       </span>
     </Link>
   );

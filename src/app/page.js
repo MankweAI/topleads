@@ -11,6 +11,10 @@ import {
   ChatBubbleBottomCenterTextIcon,
   CheckBadgeIcon,
 } from "@heroicons/react/24/solid";
+import { formatCurrency } from "@/lib/formatters";
+
+// NEW: Imported the Doughnut Chart for the preview
+import InteractiveDoughnut from "@/components/DoughnutChart";
 
 /**
  * Custom Hook: useInView
@@ -122,6 +126,14 @@ export default function Home() {
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // NEW: Mock data for the report preview snippet
+  const totalLeakedRevenue = 21500;
+  const chartData = {
+    total: totalLeakedRevenue + totalLeakedRevenue * 0.4, // 21500 + 8600
+    leaked: totalLeakedRevenue,
+    captured: totalLeakedRevenue * 0.4, // 8600
+  };
+
   return (
     // Base colors: light gray background, dark text
     <div className="min-h-screen bg-[#f1f5f9] font-sans text-[#0f172a] overflow-x-hidden">
@@ -129,21 +141,20 @@ export default function Home() {
       <section
         id="hero-funnel"
         // Dark slate background for the hero
-        className="relative w-full h-screen min-h-[700px] bg-[#0f172a] flex items-center justify-center text-center p-6 overflow-hidden"
+        className="relative w-full h-screen min-h-[700px] bg-black flex items-center justify-center text-center p-6 overflow-hidden"
       >
         {/* Video BG */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
-            className="w-full h-full object-cover opacity-30" // Reduced opacity
+            className="w-full h-full object-cover opacity-30"
             src="/video/tradesmen.mp4"
             autoPlay
             loop
             muted
             playsInline
-            poster="/image/logo.png"
           />
           {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-[#0f172a]/70 z-10"></div>
+          <div className="absolute inset-0 bg-[#0f172a]/0 z-10"></div>
         </div>
 
         {/* Header inside video - Simple Logo (White) */}
@@ -152,7 +163,7 @@ export default function Home() {
             href="#"
             className="text-2xl font-extrabold text-[#ffffff] tracking-wider"
           >
-            TOPLEADS
+            LeakageFinder
           </a>
         </div>
 
@@ -162,15 +173,15 @@ export default function Home() {
             className="text-5xl md:text-7xl font-extrabold text-[#ffffff] mb-6 leading-tight tracking-tight animate-fade-in-up"
             style={{ animationDelay: "100ms" }}
           >
-            Stop Leaking Money.
+            If you are seeing this, your business is leaking money.
           </h1>
           {/* Lighter steel text for sub-headline */}
           <p
             className="text-xl md:text-2xl text-[#94a3b8] mb-12 max-w-2xl animate-fade-in-up"
             style={{ animationDelay: "200ms" }}
           >
-            Your plumbing, HVAC, or roofing business is losing R15,000 -
-            R40,000+ a month to competitors. We'll show you exactly where.
+            Your plumbing, electrical, HVAC or roofing business is losing jobs
+            to competitors. We'll show you exactly where.
           </p>
 
           {/* The "Tool" CTA */}
@@ -179,12 +190,8 @@ export default function Home() {
             style={{ animationDelay: "300ms" }}
           >
             <h2 className="text-2xl font-semibold text-[#ffffff] mb-4">
-              Start Your Free 30-Second Audit.
+              What is your trade?
               <br />
-              {/* Lighter steel text */}
-              <span className="font-normal text-[#94a3b8] text-xl">
-                What is your trade?
-              </span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -364,15 +371,16 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* --- NEW SECTION 5: "The 'No-BS' Report Preview" --- */}
+      {/* --- SECTION 5: "The 'No-BS' Report Preview" (UPDATED) --- */}
       <AnimatedSection className="py-20 px-6 text-center bg-[#f1f5f9]">
         <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-4 tracking-tight">
-          Get Your Instant 'Money Leak' Report.
+          Get Your Instant 'Money Leak' Report
         </h2>
         <p className="text-xl text-[#64748b] mb-16 max-w-3xl mx-auto">
           We don't give you fluff. We give you data you can act on.
         </p>
 
+        {/* --- THIS IS THE MODIFIED BLOCK --- */}
         <div className="max-w-4xl mx-auto bg-[#ffffff] rounded-2xl shadow-2xl overflow-hidden border border-[#e2e8f0]">
           {/* Mock Report Header */}
           <div className="p-4 bg-[#ffffff] border-b border-[#e2e8f0]">
@@ -382,71 +390,42 @@ export default function Home() {
             </h3>
           </div>
 
-          {/* Mock Report Body */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-            {/* Widget 1: Traffic Leak */}
-            <div className="p-5 bg-[#f1f5f9] rounded-xl border border-[#e2e8f0] flex flex-col">
-              <h4 className="font-semibold text-[#0f172a] mb-3 text-left">
-                Traffic Leak (SEO)
-              </h4>
-              {/* Mock Chart */}
-              <div className="w-full h-24 bg-[#e2e8f0] rounded-md p-3 flex justify-around items-end animate-pulse">
-                <div className="w-1/5 bg-[#cbd5e1] h-1/2 rounded-t-sm"></div>
-                <div className="w-1/5 bg-[#f97316] h-1/4 rounded-t-sm"></div>{" "}
-                {/* The "leak" */}
-                <div className="w-1/5 bg-[#cbd5e1] h-3/4 rounded-t-sm"></div>
-                <div className="w-1/5 bg-[#cbd5e1] h-2/3 rounded-t-sm"></div>
-              </div>
-              <p className="text-lg text-left text-[#f97316] font-bold mt-3">
-                Rank: #14 (Critical)
-              </p>
-              {/* --- NEW COMMENTARY --- */}
-              <p className="text-sm text-left text-[#64748b] mt-2">
-                This means customers are finding your competitors first. If
-                you're not in the top 3, you're invisible.
-              </p>
+          {/* This is the user's requested code block, with mock data */}
+          <div
+            className="bg-[#ffffff] p-10 rounded-xl text-center animate-fade-in-up"
+            style={{ animationDelay: "200ms" }}
+          >
+            <h1 className="text-3xl font-bold text-[#0f172a]">
+              Your Total Simulated Leak:
+            </h1>
+            <div className="my-8 text-7xl font-extrabold text-[#f97316]">
+              {formatCurrency(totalLeakedRevenue)}
+              <span className="text-4xl text-[#64748b]"> /month</span>
             </div>
 
-            {/* Widget 2: Trust Leak */}
-            <div className="p-5 bg-[#f1f5f9] rounded-xl border border-[#e2e8f0] flex flex-col">
-              <h4 className="font-semibold text-[#0f172a] mb-3 text-left">
-                Trust Leak (Reviews)
-              </h4>
-              <div className="text-5xl font-extrabold text-[#f97316] my-4">
-                3.4 ★
-              </div>
-              <p className="text-sm text-[#64748b] font-semibold">
-                Competitor Avg: 4.8 ★
-              </p>
-              {/* --- NEW COMMENTARY --- */}
-              <p className="text-sm text-left text-[#64748b] mt-2">
-                Be honest: would you hire a 3.4-star business? Customers see
-                this and immediately call your 4.8-star competitor.
-              </p>
+            <div className="max-w-md mx-auto my-10">
+              <InteractiveDoughnut data={chartData} />
             </div>
 
-            {/* Widget 3: Enquiry Leak */}
-            <div className="p-5 bg-[#f1f5f9] rounded-xl border border-[#e2e8f0] flex flex-col">
-              <h4 className="font-semibold text-[#0f172a] mb-3 text-left">
-                Enquiry Leak (Calls)
-              </h4>
-              <div className="text-5xl font-extrabold text-[#f97316] my-4">
-                ~25
-              </div>
-              <p className="text-sm text-[#64748b] font-semibold">
-                Missed Enquiries /mo
-              </p>
-              {/* --- NEW COMMENTARY --- */}
-              <p className="text-sm text-left text-[#64748b] mt-2">
-                That's 25 jobs you never got to quote on. These are visitors who
-                left your site, likely after hours, and called a competitor.
-              </p>
-            </div>
+            <h2 className="text-3xl font-bold text-[#0f172a] mb-3">
+              Ready to Fix These Leaks?
+            </h2>
+            <p className="text-lg text-[#64748b] mb-8 max-w-2xl mx-auto">
+              This report is based on your data. The next step is a free,
+              15-minute strategy call to build a step-by-step plan.
+            </p>
+            <button
+              onClick={scrollToHero}
+              className="font-bold py-4 px-12 rounded-lg shadow-lg text-[#0f172a] bg-[#84cc16] hover:bg-[#a3e635] transition-all duration-200 text-xl transform hover:scale-105"
+            >
+              Start My Free Audit →
+            </button>
           </div>
+          {/* --- END OF MODIFIED BLOCK --- */}
         </div>
       </AnimatedSection>
 
-      {/* --- SECTION 6: "Our 'No-BS' Promise" (Was Section 5) --- */}
+      {/* --- SECTION 6: "Our 'No-BS' Promise" --- */}
       <AnimatedSection className="max-w-6xl mx-auto py-20 px-6 text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] mb-16 tracking-tight">
           Our "No-BS" Promise
@@ -489,7 +468,7 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* --- SECTION 7: Final CTA (Was Section 6) --- */}
+      {/* --- SECTION 7: Final CTA --- */}
       {/* Dark background for final CTA */}
       <section className="w-full py-20 px-6 text-center bg-[#0f172a]">
         <h2 className="text-4xl md:text-5xl font-extrabold text-[#ffffff] mb-4 tracking-tight">

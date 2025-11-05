@@ -2,15 +2,8 @@
 "use client";
 
 import { useState } from "react";
+import { formatCurrency } from "@/lib/formatters";
 
-// Helper to format currency
-const formatCurrency = (value) => {
-  if (typeof value !== "number") return "N/A";
-  return `R ${value.toLocaleString("en-ZA", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  })}`;
-};
 
 // Helper function to capitalize
 const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");

@@ -12,17 +12,10 @@ import {
   ChatBubbleBottomCenterTextIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/solid";
+import StarRatingInput from "@/components/StarRatingInput";
+import { formatCurrency } from "@/lib/formatters";
 
-// Helper to format currency
-const formatCurrency = (value) => {
-  if (typeof value !== "number") return "N/A";
-  return `R ${value.toLocaleString("en-ZA", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  })}`;
-};
-
-// --- This is the new main component ---
+// --- Main Diagnostic Component ---
 function ReportDiagnostic() {
   const searchParams = useSearchParams();
 
@@ -41,19 +34,14 @@ function ReportDiagnostic() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  // --- Step 2: Diagnostic Inputs ---
-  const [trustLeak, setTrustLeak] = useState(3.5); // Review Score (1-5)
-  const [trafficLeak, setTrafficLeak] = useState("page_2_plus"); // 'top3', 'page1', 'page_2_plus', 'unknown'
-  const [enquiryLeak, setEnquiryLeak] = useState("form_only"); // 'chatbot', 'form_only', 'nothing'
+  // --- Step 2: Diagnostic Inputs (Defaults = R0 Leak) ---
+  const [trustLeak, setTrustLeak] = useState(5.0); // 5.0 stars
+  const [trafficLeak, setTrafficLeak] = useState("top3"); // Top 3
+  const [enquiryLeak, setEnquiryLeak] = useState("chatbot"); // Has a real chatbot
 
   // --- Live Leak Calculation ---
-  const {
-    trustLeakScore,
-    trafficLeakScore,
-    enquiryLeakScore,
-    totalLeakedRevenue,
-  } = useMemo(() => {
-    let trustLeakScore = (5.0 - trustLeak) * 4000;
+  const { totalLeakedRevenue } = useMemo(() => {
+    let trustLeakScore = (5.0 - trustLeak) * 4000; // Max R20k leak
 
     let trafficLeakScore = 0;
     if (trafficLeak === "page1") trafficLeakScore = 7000;
@@ -67,15 +55,9 @@ function ReportDiagnostic() {
     let totalLeakedRevenue =
       trustLeakScore + trafficLeakScore + enquiryLeakScore;
 
-    return {
-      trustLeakScore,
-      trafficLeakScore,
-      enquiryLeakScore,
-      totalLeakedRevenue,
-    };
+    return { totalLeakedRevenue };
   }, [trustLeak, trafficLeak, enquiryLeak]);
 
-  // This replaces the "fetchReport" logic, as data is now from the URL
   useEffect(() => {
     if (!searchParams.get("businessName")) {
       setError("No report data found in URL. Please start again.");
@@ -88,7 +70,6 @@ function ReportDiagnostic() {
     setStage("submitting");
     setError("");
 
-    // This is the complete report object we will send to the "lead/capture" API
     const finalReport = {
       ...reportData,
       calculated_data: {
@@ -96,19 +77,16 @@ function ReportDiagnostic() {
         trafficLeak_rank: trafficLeak,
         enquiryLeak_method: enquiryLeak,
       },
-      simulated_missed_revenue: totalLeakedRevenue, // This is our final score
+      simulated_missed_revenue: totalLeakedRevenue,
     };
 
     try {
-      // We no longer call "report/update". We call "lead/capture" *IF* the user
-      // fills out the modal. This button just reveals the final report.
-      // We store the final report in state.
       setReportData(finalReport);
-      setStage("results"); // Move to the results view
+      setStage("results");
     } catch (err) {
       console.error("Submit Error:", err);
       setError(err.message || "An unexpected error occurred.");
-      setStage("diagnosing"); // Go back
+      setStage("diagnosing");
     }
   };
 
@@ -133,16 +111,16 @@ function ReportDiagnostic() {
   // The "Payoff" / Final CTA
   if (stage === "results") {
     const chartData = {
-      total: totalLeakedRevenue + totalLeakedRevenue * 0.4, // simulated "captured"
+      total: totalLeakedRevenue + totalLeakedRevenue * 0.4 || 1,
       leaked: totalLeakedRevenue,
-      captured: totalLeakedRevenue * 0.4, // simulated "captured"
+      captured: totalLeakedRevenue * 0.4,
     };
 
     return (
       <>
         {isModalOpen && (
           <LeadCaptureModal
-            reportContext={reportData} // Pass the complete, final report object
+            reportContext={reportData}
             ctaType="Strategy Call"
             conceptFocus={reportData.concept_focus}
             onClose={handleCloseModal}
@@ -237,46 +215,46 @@ function ReportDiagnostic() {
           onSubmit={handleDiagnosticSubmit}
           className="space-y-8 animate-fade-in-up"
         >
-          {/* --- Question 1: Trust Leak --- */}
+          {/* --- Question 1: Trust Leak (NEW STRUCTURE) --- */}
           <div className="bg-[#ffffff] p-8 rounded-xl shadow-xl border border-[#e2e8f0]">
-            <div className="flex items-start gap-4">
+            <div className="flex items-center gap-4">
               <StarIcon className="w-10 h-10 text-[#f97316] flex-shrink-0" />
+              {/* NEW H2 AND P TAGS */}
               <div>
                 <h2 className="text-2xl font-bold text-[#0f172a]">
-                  The Trust Leak (Reviews)
+                  1. What is your *actual* Google Review rating?
                 </h2>
                 <p className="text-lg text-[#64748b] mt-1">
-                  What is your *actual* Google Review rating?
+                  This is your{" "}
+                  <span className="font-semibold">"Trust Leak"</span>. Be
+                  honest, customers will call your 4.8-star competitor over your
+                  3.5-star rating every time.
                 </p>
               </div>
             </div>
-            <div className="mt-6 flex flex-col md:flex-row items-center gap-6">
-              <input
-                type="range"
-                min="1.0"
-                max="5.0"
-                step="0.1"
-                value={trustLeak}
-                onChange={(e) => setTrustLeak(parseFloat(e.target.value))}
-                className="w-full h-3 bg-[#e2e8f0] rounded-full appearance-none cursor-pointer accent-[#4f46e5]"
-              />
-              <span className="text-4xl font-extrabold text-[#4f46e5] w-32 text-center">
-                {trustLeak.toFixed(1)} ★
-              </span>
+            <div className="mt-6 flex justify-center md:justify-start">
+              <StarRatingInput value={trustLeak} onChange={setTrustLeak} />
             </div>
           </div>
 
-          {/* --- Question 2: Traffic Leak --- */}
+          {/* --- Question 2: Traffic Leak (NEW STRUCTURE) --- */}
           <div className="bg-[#ffffff] p-8 rounded-xl shadow-xl border border-[#e2e8f0]">
-            <div className="flex items-start gap-4">
+            <div className="flex items-center gap-4">
               <MagnifyingGlassIcon className="w-10 h-10 text-[#f97316] flex-shrink-0" />
+              {/* NEW H2 AND P TAGS */}
               <div>
                 <h2 className="text-2xl font-bold text-[#0f172a]">
-                  The Traffic Leak (Map Rank)
+                  2. Where do you rank on Google Maps?
                 </h2>
                 <p className="text-lg text-[#64748b] mt-1">
-                  When you Google "{reportData.industry} in {reportData.suburb}
-                  ", where do you show up?
+                  This is your{" "}
+                  <span className="font-semibold">"Traffic Leak"</span>. If
+                  you're not in the 3-Pack, you're invisible. (Check now: Google
+                  "
+                  <span className="font-semibold">
+                    {reportData.industry} in {reportData.suburb}
+                  </span>
+                  ")
                 </p>
               </div>
             </div>
@@ -350,16 +328,20 @@ function ReportDiagnostic() {
             </div>
           </div>
 
-          {/* --- Question 3: Enquiry Leak (Updated as per our discussion) --- */}
+          {/* --- Question 3: Enquiry Leak (NEW STRUCTURE) --- */}
           <div className="bg-[#ffffff] p-8 rounded-xl shadow-xl border border-[#e2e8f0]">
-            <div className="flex items-start gap-4">
+            <div className="flex items-center gap-4">
               <ChatBubbleBottomCenterTextIcon className="w-10 h-10 text-[#f97316] flex-shrink-0" />
+              {/* NEW H2 AND P TAGS */}
               <div>
                 <h2 className="text-2xl font-bold text-[#0f172a]">
-                  The Enquiry Leak (24/7 Leads)
+                  3. How do you handle leads after 5 PM?
                 </h2>
                 <p className="text-lg text-[#64748b] mt-1">
-                  After 5 PM, how does your site handle a new customer?
+                  This is your{" "}
+                  <span className="font-semibold">"Enquiry Leak"</span>. Contact
+                  forms are slow. If you don't answer 24/7, they call someone
+                  else.
                 </p>
               </div>
             </div>
@@ -458,14 +440,13 @@ function ReportDiagnostic() {
   );
 }
 
-// --- We must wrap the component in Suspense for useSearchParams to work ---
+// --- Wrapper Component ---
 export default function ReportPageWrapper() {
   return (
     <Suspense
       fallback={
         <div className="bg-[#f1f5f9] min-h-screen">
           <Header />
-          {/* You could place a dedicated <LoadingSkeleton /> here */}
           <div className="flex justify-center items-center h-[80vh]">
             <svg
               className="animate-spin h-10 w-10 text-[#4f46e5]"
